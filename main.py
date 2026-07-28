@@ -54,8 +54,16 @@ def sendCode():
                         </div> 
                 </div>
         """)
-    sendEmailConfirm(data["email"],subject,body)
-    return {"status":"200","message":f"the message send{data["email"]}"}
+    try:
+        sendEmailConfirm(data["email"], subject, body)
+        return {"status": "200", "message": f"the message sent {data['email']}"}
+    except Exception as e:
+        print(f"SMTP Error on Render: {e}")
+        # Return a graceful message so your desktop app doesn't crash on .json() parsing
+        return {
+            "status": "error", 
+            "message": "Email server restricted on cloud host, but code generated successfully."
+        }
 
 @app.post("/saveData")
 def saveData(dataSv : dict):
