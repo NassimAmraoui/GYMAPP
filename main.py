@@ -33,6 +33,11 @@ def codeConfirm():
 def sendEmailConfirm(to_email,subject,body):
     senderEmail = EMAIL_SERVICE
     app_password = PASSWORD_EMAIL_SERVICE
+    smtp_host = os.getenv("SMTP_HOST", "smtp-relay.brevo.com")
+    smtp_port = int(os.getenv("SMTP_PORT", 2525))
+    sender_email = os.getenv("SMTP_USER")
+    app_password = os.getenv("SMTP_PASS")
+    
     msg = MIMEText(body,"html")
     msg["Subject"] = subject
     msg["From"] = senderEmail
