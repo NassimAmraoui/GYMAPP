@@ -126,7 +126,7 @@ def check_exist_account():
                 user = "avnadmin",
                 password=DB_PASSWORD,
                 database="gestion_salle_sport",     
-                ssl_ca =CA_PEM,
+                ssl_ca =ssl_certificate,
                 ssl_verify_cert = True)
         cr = connexion.cursor()
         inst2 = "SELECT * FROM accounts"
