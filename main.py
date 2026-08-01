@@ -76,7 +76,6 @@ def saveData(dataSv : dict):
     data["password"] = dataSv.get("password","")
     return {"code":200,"message":"data it save"}
 
-
 @app.post("/CreateAccount")
 def CreateAccount(dataRV : dict):
     confirm = dataRV.get("confirm",False)
@@ -116,4 +115,39 @@ def CreateAccount(dataRV : dict):
             else:
                 print(err)
     return {"resultat":res}
+@app.get("/checkAccount")
+def check_exist_account():
+    exist = False
+    db="gestion_salle_sport"
+    try:
+        connexion = sql.connect(
+                host ="mysql-24a70c3f-amraoui-7d80.a.aivencloud.com",
+                port =22229 ,
+                user = "avnadmin",
+                password=DB_PASSWORD,
+                database="gestion_salle_sport",     
+                ssl_ca =CA_PEM,
+                ssl_verify_cert = True)
+        cr = connexion.cursor()
+        inst2 = "SELECT * FROM accounts"
+        cr.execute(inst2)
+        resultat = cr.fetchall()
+        for row in resultat:
+            password_in_database = str(row[1])
+            correct_password = bcrypt.checkpw(data['password'].encode('utf-8'),password_in_database.encode('utf-8'))
+            
+            if(data['email'] == str(row[0]) and correct_password):
+                exist = True
+        
+        
+        cr.close()
+        connexion.close()
+    except sql.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("the somthing worren in your name or password")
+        elif err.errno ==  errorcode.ER_BAD_DB_ERROR:
+            print(f"there not data base with name {db}")
+        else:
+            print(err)
+    return exist
 
