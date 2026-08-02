@@ -6,7 +6,7 @@ import bcrypt
 from email.mime.text import MIMEText
 import random
 import os
-ssl_certificate = os.getenv("CA_CERT")
+ssl_certificate = "/etc/secrets/ca.pem"
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 EMAIL_SERVICE = os.getenv("EMAIL_SERVICE")
 PASSWORD_EMAIL_SERVICE = os.getenv("PASSWORD_EMAIL_SERVICE")
