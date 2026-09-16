@@ -84,7 +84,7 @@ def CreateAccount(dataRV : dict):
     if(confirm and data["code"] == Code ): 
         try:
             connexion = sql.connect(
-                host ="mysql-24a70c3f-amraoui-7d80.a.aivencloud.com",
+                host ="mysql-305488c-amraoui-7d80.e.aivencloud.com",
                 port =22229 ,
                 user = "avnadmin",
                 password=DB_PASSWORD,
